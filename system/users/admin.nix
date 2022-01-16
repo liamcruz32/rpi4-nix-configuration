@@ -59,8 +59,8 @@
     programs.bash = {
       enable=true;
       shellAliases = {
-        rebuild = "bash ~/.dotfiles/apply_system.sh";
-        upgrade = "bash ~/.dotfiles/update_system.sh";
+        rebuild = "bash ~/rpi4-nix-configuration/apply_system.sh";
+        upgrade = "bash ~/rpi4-nix-configuration/update_system.sh";
         ls="ls -CF --color";
         la="ls -A --color";
         ll="ls -lha --color";
