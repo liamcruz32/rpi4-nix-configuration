@@ -11,6 +11,7 @@
     nixpkgs.config.allowUnfree = true;
     home.packages = with pkgs; [
       crawl
+      ctags
     ];
 
     programs.urxvt = {
@@ -19,15 +20,17 @@
     programs.gh = {
       enable = true;
     };
+
     programs.vim = {
       enable = true;
       plugins = with pkgs.vimPlugins; [
         nerdtree
-        pear-tree
         syntastic
+        taglist-vim
         lightline-vim
+        auto-pairs
+        vim-commentary
         vim-fugitive
-        vim-sensible
         vim-nix
         fzf-vim
       ];
@@ -45,15 +48,27 @@
         set noeb vb t_vb=
         au GUIEnter * set vb t_vb
 
+        autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+        autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
         nnoremap s :Lines<CR>
-        nnoremap ff :NERDTree<CR>
+        nnoremap ff :NERDTreeToggle<CR>
+        nnoremap pp :TlistToggle<CR>
 
         set foldmethod=indent
         set foldlevel=99
 
+        nnoremap <C-J> <C-W><C-J>
+        nnoremap <C-K> <C-W><C-K>
+        nnoremap <C-L> <C-W><C-L>
+        nnoremap <C-H> <C-W><C-H>
+
+        set splitbelow
+        set splitright
+
         let g:lightline = {
-            \ 'colorscheme': 'apprentice',
-            \}
+        \ 'colorscheme': 'apprentice',
+        \}
       '';
     };
     programs.bash = {
